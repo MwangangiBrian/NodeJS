@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://bmwangimwangangi-s-workspace-0e8bnu.us-west-2.xata.sh/db/CRUD-db",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}

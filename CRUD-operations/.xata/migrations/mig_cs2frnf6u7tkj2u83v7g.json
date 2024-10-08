@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_cs2frnf6u7tkj2u83v7g",
+    "operations": [
+      {
+        "drop_table": {
+          "name": "dummydata"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_cs2frnf6u7tkj2u83v7g",
+  "parent": "mig_cs2foif6u7tkj2u83v4g",
+  "schema": "public",
+  "startedAt": "2024-10-08T09:39:42.040356Z"
+}
