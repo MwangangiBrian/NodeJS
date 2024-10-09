@@ -111,14 +111,6 @@ const tables = [
         comment: '{}',
       },
       {
-        name: 'id',
-        type: 'int',
-        notNull: false,
-        unique: false,
-        defaultValue: null,
-        comment: '{}',
-      },
-      {
         name: 'language',
         type: 'text',
         notNull: false,
