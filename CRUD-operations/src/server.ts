@@ -1,9 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import { readFileSync } from 'fs';
-import path from 'path';
 import { getXataClient, User } from './xata';
-import { get } from 'http';
 
 dotenv.config();
 
@@ -16,40 +13,54 @@ const xata = getXataClient();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-// Get the current directory
-const _dirname = path.resolve();
-
 // GET all users in the db
-app.get('/api/jobs', async (req: Request, res: Response) => {
-  const users = await xata.db.User.getAll();
-  res.json(users);
+app.get('/api/users', async (req: Request, res: Response) => {
+  try {
+    const users = await xata.db.User.getAll();
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // CREATE a new user
-app.post('/api/jobs', async (req: Request, res: Response) => {
-  const user = req.body;
-  const createdUser = await xata.db.User.create(user);
-  res.json(createdUser);
+app.post('/api/users', async (req: Request, res: Response) => {
+  try {
+    const user = req.body;
+    const createdUser = await xata.db.User.create(user);
+    res.json(createdUser);
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // EDIT user data
-app.put('/api/jobs/:id', async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const user = req.body;
-  const updatedUser = await xata.db.User.update(id, user);
-  res.json(updatedUser);
+app.put('/api/users/:id', async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const user = req.body;
+    const updatedUser = await xata.db.User.update(id, user);
+    res.json(updatedUser);
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // DELETE user records
-app.delete('/api/jobs/:id', async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const deletedRecord = await xata.db.User.delete(id);
-  res.json(deletedRecord);
+app.delete('/api/users/:id', async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    await xata.db.User.delete(id);
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-// Start the server
 app.listen(port, () => {
-  console.log(
-    `[server]: Server TypeScript is running at http://localhost:${port} 👍👍 `
-  );
+  console.log(`Server is running at http://localhost:${port} 👍👍`);
 });
