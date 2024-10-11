@@ -1,7 +1,7 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import { errorHandler } from './middleware/errorHandler';
-import { logger } from './middleware/logger';
+import { logger } from './utils/logger';
 import userRoutes from './routes/users';
 
 dotenv.config();
